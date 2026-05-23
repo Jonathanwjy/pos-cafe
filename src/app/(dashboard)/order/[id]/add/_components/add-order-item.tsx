@@ -10,17 +10,20 @@ import { toast } from "sonner";
 import CardMenu from "./card-menu";
 import LoadingCardMenu from "./loading-card-menu";
 import CartSection from "./cart";
-import { useState } from "react";
+import { startTransition, useActionState, useState } from "react";
 import { Cart } from "@/types/order";
 import { Menu } from "@/validations/menu-validation";
+
+import { INITIAL_STATE_ACTION } from "@/constants/general-constant";
+import { addOrderItem } from "../../../action";
 
 export default function AddOrderItem({ id }: { id: string }) {
   const supabase = createClient();
   const {
-    currentFilter,
-    hanldeChangeFilter,
     currentSearch,
+    currentFilter,
     handleChangeSearch,
+    handleChangeFilter,
   } = useDataTable();
 
   const { data: menus, isLoading: isLoadingMenu } = useQuery({
@@ -104,39 +107,52 @@ export default function AddOrderItem({ id }: { id: string }) {
     } else {
       setCarts([
         ...carts,
-        {
-          menu_id: menu.id,
-          quantity: 1,
-          total: menu.price,
-          notes: "",
-          menu,
-          nominal: 0,
-        },
+        { menu_id: menu.id, quantity: 1, total: menu.price, notes: "", menu },
       ]);
     }
+  };
+
+  const [addOrderItemState, addOrderItemAction, isPendingAddOrderItem] =
+    useActionState(addOrderItem, INITIAL_STATE_ACTION);
+
+  const handleOrder = async () => {
+    const data = {
+      order_id: id,
+      items: carts.map((item) => ({
+        order_id: order?.id ?? "",
+        ...item,
+        status: "pending",
+      })),
+    };
+
+    startTransition(() => {
+      addOrderItemAction(data);
+    });
   };
 
   return (
     <div className="flex flex-col lg:flex-row gap-4 w-full">
       <div className="space-y-4 lg:w-2/3">
-        <div className="flex flex-col justify-between w-full lg:flex-row items-center gap-4">
-          <h1 className="text-2xl font-bold">Menu</h1>
-          <div className="flex gap-2">
-            {FILTER_MENU.map((item) => (
-              <Button
-                key={item.value}
-                onClick={() => hanldeChangeFilter(item.value)}
-                variant={currentFilter === item.value ? "default" : "outline"}
-              >
-                {item.label}
-              </Button>
-            ))}
+        <div className="flex flex-col items-center justify-between gap-4 w-full lg:flex-row">
+          <div className="flex flex-col lg:flex-row items-center gap-4">
+            <h1 className="text-2xl font-bold">Menu</h1>
+            <div className="flex gap-2">
+              {FILTER_MENU.map((item) => (
+                <Button
+                  key={item.value}
+                  onClick={() => handleChangeFilter(item.value)}
+                  variant={currentFilter === item.value ? "default" : "outline"}
+                >
+                  {item.label}
+                </Button>
+              ))}
+            </div>
           </div>
+          <Input
+            placeholder="Search..."
+            onChange={(e) => handleChangeSearch(e.target.value)}
+          />
         </div>
-        <Input
-          placeholder="Search...."
-          onChange={(e) => handleChangeSearch(e.target.value)}
-        />
         {isLoadingMenu && !menus ? (
           <LoadingCardMenu />
         ) : (
@@ -151,7 +167,7 @@ export default function AddOrderItem({ id }: { id: string }) {
           </div>
         )}
         {!isLoadingMenu && menus?.data?.length === 0 && (
-          <div className="w-full text-center">Menu not found</div>
+          <div className="text-center w-full">Menu not found</div>
         )}
       </div>
       <div className="lg:w-1/3">
@@ -160,6 +176,8 @@ export default function AddOrderItem({ id }: { id: string }) {
           carts={carts}
           setCarts={setCarts}
           onAddToCart={handleAddToCart}
+          isLoading={isPendingAddOrderItem}
+          onOrder={handleOrder}
         />
       </div>
     </div>
