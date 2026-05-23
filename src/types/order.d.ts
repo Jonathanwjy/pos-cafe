@@ -1,4 +1,4 @@
-import { Menu } from '@/validations/menu-validation';
+import { Menu } from "@/validations/menu-validation";
 
 export type OrderFormState = {
   status?: string;
@@ -13,6 +13,7 @@ export type OrderFormState = {
 export type Cart = {
   menu_id: string;
   quantity: number;
+  total: number;
   nominal: number;
   notes: string;
   menu: Menu;
