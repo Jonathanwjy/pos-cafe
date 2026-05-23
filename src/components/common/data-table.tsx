@@ -28,7 +28,7 @@ export default function DataTable({
   isLoading,
   totalPages,
   currentPage,
-  onchangePage,
+  onChangePage,
   currentLimit,
   onChangeLimit,
 }: {
@@ -37,7 +37,7 @@ export default function DataTable({
   isLoading?: boolean;
   totalPages: number;
   currentPage: number;
-  onchangePage: (page: number) => void;
+  onChangePage: (page: number) => void;
   currentLimit: number;
   onChangeLimit: (limit: number) => void;
 }) {
@@ -124,7 +124,7 @@ export default function DataTable({
             <PaginationDataTable
               currentPage={currentPage}
               totalPages={totalPages}
-              onChangePage={onchangePage}
+              onChangePage={onChangePage}
             />
           </div>
         )}

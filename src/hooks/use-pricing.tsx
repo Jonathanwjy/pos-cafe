@@ -1,16 +1,13 @@
-import { Menu } from '@/validations/menu-validation';
-import { useMemo } from 'react';
+import { Menu } from "@/validations/menu-validation";
+import { useMemo } from "react";
 
 export function usePricing(
-  orderMenu:
-    | { menus: Menu; quantity: number; nominal: number }[]
-    | null
-    | undefined,
+  orderMenu: { menus: Menu; quantity: number }[] | null | undefined,
 ) {
   const totalPrice = useMemo(() => {
     let total = 0;
     orderMenu?.forEach((item) => {
-      total += item.nominal;
+      total += item.menus.price * item.quantity;
     });
     return total;
   }, [orderMenu]);
