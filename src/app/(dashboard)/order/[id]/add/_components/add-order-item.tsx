@@ -23,7 +23,7 @@ export default function AddOrderItem({ id }: { id: string }) {
     currentSearch,
     currentFilter,
     handleChangeSearch,
-    handleChangeFilter,
+    hanldeChangeFilter,
   } = useDataTable();
 
   const { data: menus, isLoading: isLoadingMenu } = useQuery({
@@ -140,7 +140,7 @@ export default function AddOrderItem({ id }: { id: string }) {
               {FILTER_MENU.map((item) => (
                 <Button
                   key={item.value}
-                  onClick={() => handleChangeFilter(item.value)}
+                  onClick={() => hanldeChangeFilter(item.value)}
                   variant={currentFilter === item.value ? "default" : "outline"}
                 >
                   {item.label}

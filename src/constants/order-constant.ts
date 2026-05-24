@@ -1,22 +1,22 @@
-import { INITIAL_STATE_ACTION } from './general-constant';
+import { INITIAL_STATE_ACTION } from "./general-constant";
 
 export const HEADER_TABLE_ORDER = [
-  'No',
-  'Order ID',
-  'Customer Name',
-  'Table',
-  'Status',
-  'Action',
+  "No",
+  "Order ID",
+  "Customer Name",
+  "Table",
+  "Status",
+  "Action",
 ];
 
 export const INITIAL_ORDER = {
-  customer_name: '',
-  table_id: '',
-  status: '',
+  customer_name: "",
+  table_id: "",
+  status: "",
 };
 
 export const INITIAL_STATE_ORDER = {
-  status: 'idle',
+  status: "idle",
   errors: {
     customer_name: [],
     table_id: [],
@@ -26,11 +26,11 @@ export const INITIAL_STATE_ORDER = {
 };
 
 export const INITIAL_ORDER_TAKEAWAY = {
-  customer_name: '',
+  customer_name: "",
 };
 
 export const INITIAL_STATE_ORDER_TAKEAWAY = {
-  status: 'idle',
+  status: "idle",
   errors: {
     customer_name: [],
     _form: [],
@@ -39,49 +39,49 @@ export const INITIAL_STATE_ORDER_TAKEAWAY = {
 
 export const STATUS_CREATE_ORDER = [
   {
-    value: 'reserved',
-    label: 'Reserved',
+    value: "reserved",
+    label: "Reserved",
   },
   {
-    value: 'process',
-    label: 'Process',
+    value: "process",
+    label: "Process",
   },
 ];
 
 export const HEADER_TABLE_DETAIL_ORDER = [
-  'No',
-  'Menu',
-  'Total',
-  'Status',
-  'Action',
+  "No",
+  "Menu",
+  "Total",
+  "Status",
+  "Action",
 ];
 
 export const FILTER_MENU = [
   {
-    value: '',
-    label: 'All',
+    value: "",
+    label: "All",
   },
   {
-    value: 'mains',
-    label: 'Mains',
+    value: "mains",
+    label: "Mains",
   },
   {
-    value: 'sides',
-    label: 'Sides',
+    value: "sides",
+    label: "Sides",
   },
   {
-    value: 'desserts',
-    label: 'Desserts',
+    value: "desserts",
+    label: "Desserts",
   },
   {
-    value: 'beverages',
-    label: 'Beverages',
+    value: "beverages",
+    label: "Beverages",
   },
 ];
 
 export const INITIAL_STATE_GENERATE_PAYMENT = {
   ...INITIAL_STATE_ACTION,
   data: {
-    payment_token: '',
+    payment_url: "",
   },
 };
