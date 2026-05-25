@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import { Ban } from 'lucide-react';
-import Link from 'next/link';
+import { Button } from "@/components/ui/button";
+import { Ban } from "lucide-react";
+import Link from "next/link";
 
 export default function Failed() {
   return (

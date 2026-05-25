@@ -1,7 +1,7 @@
-import Failed from './_components/failed';
+import Failed from "./_components/failed";
 
 export const metadata = {
-  title: 'WPU Cafe | Payment Failed',
+  title: "WPU Cafe | Payment Failed",
 };
 
 export default function FailedPage() {
