@@ -21,7 +21,8 @@ export default function Success() {
         .update({
           status: "settled",
         })
-        .eq("order_id", order_id);
+        .eq("order_id", order_id)
+        .single();
     },
   });
 
