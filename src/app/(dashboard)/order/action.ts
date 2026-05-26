@@ -2,7 +2,10 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { Cart, OrderFormState } from "@/types/order";
-import { orderFormSchema } from "@/validations/order-validation";
+import {
+  orderFormSchema,
+  orderTakeawayFormSchema,
+} from "@/validations/order-validation";
 import { stat } from "fs";
 import { redirect } from "next/navigation";
 import { FormState } from "react-hook-form";
@@ -72,6 +75,48 @@ export async function createOrder(
     status: "success",
   };
 }
+export async function createOrderTakeway(
+  prevState: OrderFormState,
+  formData: FormData,
+) {
+  const validatedFields = orderTakeawayFormSchema.safeParse({
+    customer_name: formData.get("customer_name"),
+  });
+
+  if (!validatedFields.success) {
+    return {
+      status: "error",
+      errors: {
+        ...validatedFields.error.flatten().fieldErrors,
+        _form: [],
+      },
+    };
+  }
+
+  const supabase = await createClient();
+
+  const orderId = `WPUCAFE-${Date.now()}`;
+
+  const { error } = await supabase.from("orders").insert({
+    order_id: orderId,
+    customer_name: validatedFields.data.customer_name,
+    status: "process",
+  });
+
+  if (error) {
+    return {
+      status: "error",
+      errors: {
+        ...prevState.errors,
+        _form: [error.message],
+      },
+    };
+  }
+
+  return {
+    status: "success",
+  };
+}
 
 export async function updateReservation(
   prevState: OrderFormState,
@@ -125,7 +170,7 @@ export async function addOrderItem(
 ) {
   const supabase = await createClient();
 
-  const payload = data.items.map(({ total, menu, ...item }) => item);
+  const payload = data.items.map(({ menu, ...item }) => item);
 
   const { error } = await supabase.from("orders_menus").insert(payload);
   if (error) {

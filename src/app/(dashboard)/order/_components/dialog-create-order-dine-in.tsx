@@ -24,10 +24,12 @@ import FormSelect from "@/components/common/form-select";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 
-export default function DialogCreateOrder({
+export default function DialogCreateOrderDineIn({
   tables,
+  closeDialog,
 }: {
   tables: Table[] | undefined | null;
+  closeDialog: () => void;
 }) {
   const form = useForm<OrderForm>({
     resolver: zodResolver(orderFormSchema),
@@ -46,7 +48,7 @@ export default function DialogCreateOrder({
     if (createOrderState?.status === "success") {
       toast.success("Create Order Success");
       form.reset();
-      document.querySelector<HTMLButtonElement>('[data-state="open"]')?.click();
+      closeDialog();
     }
   }, [createOrderState]);
 
@@ -65,45 +67,47 @@ export default function DialogCreateOrder({
     <DialogContent className="sm:max-w-[425px]">
       <Form {...form}>
         <DialogHeader>
-          <DialogTitle>Create Order</DialogTitle>
+          <DialogTitle>Create Order Dine In</DialogTitle>
           <DialogDescription>Add a new order from customer</DialogDescription>
         </DialogHeader>
         <form onSubmit={onSubmit} className="space-y-4">
-          <FormInput
-            form={form}
-            name={"customer_name"}
-            label="Customer Name"
-            placeholder="Insert Customer name"
-            type="text"
-          />
-          <FormSelect
-            form={form}
-            name={"table_id"}
-            label="Table Number"
-            selectItem={(tables ?? []).map((table: Table) => ({
-              value: `${table.id}`,
-              label: `${table.name} - ${table.status} (${table.capacity})`,
-              disabled: table.status !== "available",
-            }))}
-          />{" "}
-          <FormSelect
-            form={form}
-            name={"status"}
-            label="Status"
-            selectItem={STATUS_CREATE_ORDER}
-          />
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </DialogClose>
-            <Button type="submit" className="cursor-pointer">
-              {isPendingCreateOrder ? (
-                <Loader2 className="animate-spin" />
-              ) : (
-                "Create"
-              )}
-            </Button>
-          </DialogFooter>
+          <div className="space-y-4 max-h-[50vh] px-1 overflow-y-auto py-1">
+            <FormInput
+              form={form}
+              name={"customer_name"}
+              label="Customer Name"
+              placeholder="Insert Customer name"
+              type="text"
+            />
+            <FormSelect
+              form={form}
+              name={"table_id"}
+              label="Table Number"
+              selectItem={(tables ?? []).map((table: Table) => ({
+                value: `${table.id}`,
+                label: `${table.name} - ${table.status} (${table.capacity})`,
+                disabled: table.status !== "available",
+              }))}
+            />{" "}
+            <FormSelect
+              form={form}
+              name={"status"}
+              label="Status"
+              selectItem={STATUS_CREATE_ORDER}
+            />
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </DialogClose>
+              <Button type="submit" className="cursor-pointer">
+                {isPendingCreateOrder ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  "Create"
+                )}
+              </Button>
+            </DialogFooter>
+          </div>
         </form>
       </Form>
     </DialogContent>
