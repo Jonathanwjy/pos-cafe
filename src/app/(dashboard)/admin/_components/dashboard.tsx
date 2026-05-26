@@ -189,7 +189,7 @@ export default function Dashboard() {
         </Card>
       </div>
       <div className="flex flex-col lg:flex-row gap-4">
-        <Card className="w-full lg:2/3">
+        <Card className="w-full lg:w-2/3">
           <CardHeader>
             <CardTitle>Order Create Per Week</CardTitle>
             <CardDescription>
@@ -201,7 +201,7 @@ export default function Dashboard() {
             <LineCharts data={orders} />
           </div>
         </Card>
-        <Card className="w-full lg:1/3">
+        <Card className="w-full lg:w-1/3">
           <CardHeader>
             <CardTitle>Active Order</CardTitle>
             <CardDescription>Showing last 5 active order</CardDescription>

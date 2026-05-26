@@ -103,21 +103,24 @@ export default function Summary({
             <p className="text-lg font-semibold">Total</p>
             <p className="text-lg font-semibold">{convertIDR(grandTotal)}</p>
           </div>
-          {order?.status === "process" &&
-            profile.role !== "kitchen" && (
-                <Button
-                  type="submit"
-                  onClick={handleGeneratePayment}
-                  disabled={!isAllServed || isPendingGeneratePayment}
-                  className="w-full font-semibold bg-teal-500 hover:bg-teal-600 text-white cursor-pointer"
-                >
-                  {isPendingGeneratePayment ? (
-                    <Loader2 className="animate-spin" />
-                  ) : (
-                    "Pay"
-                  )}
-                </Button>
+          {order?.status === "process" && profile.role !== "kitchen" && (
+            <Button
+              type="submit"
+              onClick={handleGeneratePayment}
+              disabled={
+                !isAllServed ||
+                isPendingGeneratePayment ||
+                orderMenu?.length === 0
+              }
+              className="w-full font-semibold bg-teal-500 hover:bg-teal-600 text-white cursor-pointer"
+            >
+              {isPendingGeneratePayment ? (
+                <Loader2 className="animate-spin" />
+              ) : (
+                "Pay"
               )}
+            </Button>
+          )}
         </div>
       </CardContent>
     </Card>
