@@ -1,15 +1,13 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { FormState } from "@/types/general";
 import { Cart, OrderFormState } from "@/types/order";
 import {
   orderFormSchema,
   orderTakeawayFormSchema,
 } from "@/validations/order-validation";
-import { stat } from "fs";
 import { redirect } from "next/navigation";
-import { FormState } from "react-hook-form";
-import { promise } from "zod";
 import midtrans from "midtrans-client";
 import { environment } from "@/configs/environment";
 
@@ -75,7 +73,8 @@ export async function createOrder(
     status: "success",
   };
 }
-export async function createOrderTakeway(
+
+export async function createOrderTakeaway(
   prevState: OrderFormState,
   formData: FormData,
 ) {
@@ -119,7 +118,7 @@ export async function createOrderTakeway(
 }
 
 export async function updateReservation(
-  prevState: OrderFormState,
+  prevState: FormState,
   formData: FormData,
 ) {
   const supabase = await createClient();
@@ -227,7 +226,6 @@ export async function generatePayment(
     isProduction: false,
     serverKey: environment.MIDTRANS_SERVER_KEY!,
   });
-
   const parameter = {
     transaction_details: {
       order_id: `${orderId}`,

@@ -10,7 +10,7 @@ import {
   INITIAL_ORDER_TAKEAWAY,
   INITIAL_STATE_ORDER_TAKEAWAY,
 } from "@/constants/order-constant";
-import { createOrderTakeway } from "../action";
+import { createOrderTakeaway } from "../action";
 import {
   DialogClose,
   DialogContent,
@@ -35,7 +35,7 @@ export default function DialogCreateOrderTakeway({
   });
 
   const [createOrderState, createOrderAction, isPendingCreateOrder] =
-    useActionState(createOrderTakeway, INITIAL_STATE_ORDER_TAKEAWAY);
+    useActionState(createOrderTakeaway, INITIAL_STATE_ORDER_TAKEAWAY);
 
   useEffect(() => {
     if (createOrderState?.status === "error") {

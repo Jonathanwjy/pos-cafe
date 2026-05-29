@@ -156,7 +156,7 @@ export default function TableManagement() {
         data={filteredData}
         totalPages={totalPages}
         currentPage={currentPage}
-        onchangePage={handleChangePage}
+        onChangePage={handleChangePage}
         currentLimit={currentLimit}
         onChangeLimit={handleChangeLimit}
       />

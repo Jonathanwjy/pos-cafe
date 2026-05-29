@@ -33,7 +33,7 @@ import { signOut } from "@/actions/auth-action";
 import { useAuthStore } from "@/stores/auth-store";
 
 export default function AppSidebar() {
-  const { ismobile } = useSidebar();
+  const { isMobile } = useSidebar();
   const pathname = usePathname();
   const profile = useAuthStore((state) => state.profile);
 
@@ -107,7 +107,7 @@ export default function AppSidebar() {
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 className="min-w-56 rounded-lg"
-                side={ismobile ? "bottom" : "right"}
+                side={isMobile ? "bottom" : "right"}
                 align="end"
                 sideOffset={4}
               >

@@ -168,7 +168,7 @@ export default function MenuManagement() {
         data={filteredData}
         totalPages={totalPages}
         currentPage={currentPage}
-        onchangePage={handleChangePage}
+        onChangePage={handleChangePage}
         currentLimit={currentLimit}
         onChangeLimit={handleChangeLimit}
       />
